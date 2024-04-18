@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+  prometheus:
+    container_name: prometheus  # Nome personalizado para o container
+    image: prom/prometheus:v2.32.1
+    volumes:
+      - ./prometheus-data:/prometheus
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=30d'  # Ajuste conforme necessário para retenção de dados
+    restart: unless-stopped
